@@ -87,6 +87,21 @@
       gap: 20px;
     }
     .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+      align-items: stretch;
+    }
+    .project-card {
+      height: 100%;
+    }
+    .project-card h3 {
+      margin-bottom: 12px;
+    }
+    .project-card p {
+      margin-bottom: 12px;
+    }
     .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
     .card {
       background: white;
@@ -141,6 +156,9 @@
     }
     @media (max-width: 768px) {
       .hero h1 { font-size: 2rem; }
+      nav .container { flex-direction: column; gap: 10px; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
       nav .container { flex-direction: column; gap: 10px; }
     }
   </style>
@@ -208,11 +226,12 @@
           <h3>Microsoft 365 / SharePoint</h3>
           <div class="tag-list">
             <span class="tag">SharePoint Online</span>
-            <span class="tag">SharePoint 2019/2016</span>
+            <span class="tag">SharePoint 2019/2016/2013</span>
             <span class="tag">Site Architecture</span>
             <span class="tag">Permissions</span>
             <span class="tag">Document Libraries</span>
             <span class="tag">Governance</span>
+            <span class="tag">Migration</span>
           </div>
         </div>
         <div class="card">
@@ -222,6 +241,7 @@
             <span class="tag">Power Automate</span>
             <span class="tag">Dataverse</span>
             <span class="tag">Power BI</span>
+            <span class="tag">Copilot</span>
           </div>
         </div>
         <div class="card">
@@ -247,46 +267,99 @@
           </div>
         </div>
         <div class="card">
-          <h3>Other Techs</h3>
+          <h3>Other Skills</h3>
           <div class="tag-list">
             <span class="tag">OnePlan.AI</span>
             <span class="tag">Snow Atlas</span>
             <span class="tag">Dynamics 365</span>
-            <span class="tag"></span>
-            <span class="tag">Employee Self-Service</span>
+            <span class="tag">Google Analytics</span>
+            <span class="tag">Snowflake</span>
+            <span class="tag">Agiloft</span>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+
   <section id="projects">
     <div class="container">
       <h2 class="section-title">Featured Projects</h2>
-      <div class="grid grid-2">
-        <div class="card">
-          <h3>Corporate Intranet Portal</h3>
-          <p><strong>Problem:</strong> Employees lacked a centralized communication and resource hub.</p>
-          <p><strong>Solution:</strong> Built a modern SharePoint Online intranet with departmental pages, document centers, news, and quick links.</p>
-          <p><strong>Impact:</strong> Improved content discoverability and internal communication across teams.</p>
+      <div class="projects-grid">
+        <div class="card project-card">
+          <h3>Hospital Management System</h3>
+          <p><strong>Tools & Technology:</strong> SharePoint 2013/2016, C#, SQL Server</p>
+          <p><strong>Description:</strong> Developed a SharePoint-based system to manage donor information and organ/tissue storage records with structured data entry and approval workflows.</p>
+          <p><strong>Key Deliverables:</strong></p>
+          <ul class="clean">
+            <li><strong>Dashboard:</strong> Overview of donor, organ, and tissue information.</li>
+            <li><strong>Data Entry Forms:</strong> Structured forms with 5–10 tabs and detailed retrieval data capture.</li>
+            <li><strong>Approval Workflow:</strong> Streamlined approvals across system modules.</li>
+          </ul>
         </div>
-        <div class="card">
-          <h3>Employee Onboarding Solution</h3>
-          <p><strong>Problem:</strong> Onboarding relied on emails, Excel trackers, and manual follow-ups.</p>
-          <p><strong>Solution:</strong> Created a Power App with SharePoint lists and Power Automate approvals for HR onboarding tasks.</p>
-          <p><strong>Impact:</strong> Reduced manual coordination and improved onboarding visibility.</p>
+
+        <div class="card project-card">
+          <h3>Sales Automation in SharePoint Office 365</h3>
+          <p><strong>Tools & Technology:</strong> Power Automate, Adobe Sign, Approvals</p>
+          <p><strong>Description:</strong> Built a SharePoint-based automation solution for a U.S. sales organization to streamline agreement generation, invoicing, approvals, and reporting.</p>
+          <p><strong>Key Deliverables:</strong></p>
+          <ul class="clean">
+            <li><strong>Vendor Agreement Generation:</strong> Automated agreements using department-specific templates with digital signatures.</li>
+            <li><strong>Invoice Generation:</strong> Automated invoice creation for sales transactions.</li>
+            <li><strong>Approval Workflow:</strong> Multi-level invoice approvals by department managers.</li>
+            <li><strong>Power BI Reporting:</strong> Dynamic sales reports for business insights.</li>
+          </ul>
         </div>
-        <div class="card">
-          <h3>Document Management System</h3>
-          <p><strong>Problem:</strong> Business documents were scattered and hard to track.</p>
-          <p><strong>Solution:</strong> Designed structured libraries with metadata, versioning, permissions, and approval workflows.</p>
-          <p><strong>Impact:</strong> Improved document control, compliance, and searchability.</p>
+
+        <div class="card project-card">
+          <h3>Pre-Dispatch Checklist Management System (PDCMS)</h3>
+          <p><strong>Tools & Technology:</strong> Power Apps, Power Automate</p>
+          <p><strong>Description:</strong> Designed a digital pre-dispatch checklist system for freight and logistics operations to improve compliance, safety, and operational visibility.</p>
+          <p><strong>Key Deliverables:</strong></p>
+          <ul class="clean">
+            <li><strong>Canvas App:</strong> Interactive dashboard and checklist tracking for inspections.</li>
+            <li><strong>Power Automate Flows:</strong> Automated submission, confirmation, and approvals.</li>
+            <li><strong>Compliance & Safety Assurance:</strong> Enforced required checks before dispatch.</li>
+            <li><strong>Real-Time Visibility:</strong> Enabled managers to track inspection and approval status.</li>
+          </ul>
         </div>
-        <div class="card">
-          <h3>Custom SPFx Dashboard Web Part</h3>
-          <p><strong>Problem:</strong> Teams needed a single dashboard for key updates and business metrics.</p>
-          <p><strong>Solution:</strong> Developed a custom SPFx web part using React and TypeScript with SharePoint/Graph integrations.</p>
-          <p><strong>Impact:</strong> Delivered a tailored user experience inside SharePoint Online.</p>
+
+        <div class="card project-card">
+          <h3>Learning Portal</h3>
+          <p><strong>Tools & Technology:</strong> SharePoint Online, SPFx (React), Power Automate, OneDrive, Microsoft Stream, Git, VS Code</p>
+          <p><strong>Description:</strong> Built an e-learning portal for an international NGO to train staff on contract management through structured, interactive learning modules.</p>
+          <p><strong>Key Deliverables:</strong></p>
+          <ul class="clean">
+            <li><strong>Multi-Lingual Support:</strong> English, French, and Spanish based on user preference.</li>
+            <li><strong>SPFx Web Parts:</strong> Custom News, Announcements, and Quiz components.</li>
+            <li><strong>Microsoft Stream Integration:</strong> Embedded training videos for richer learning.</li>
+            <li><strong>User & Admin Dashboards:</strong> Progress tracking and admin controls via SPFx.</li>
+            <li><strong>Certification Generation:</strong> Automatic certificates for module and final completion.</li>
+          </ul>
+        </div>
+
+        <div class="card project-card">
+          <h3>Power BI Reports with Dynamics 365</h3>
+          <p><strong>Tools & Technology:</strong> Power BI Desktop, Dataverse, Power Automate, Eventbrite, ClickDimensions</p>
+          <p><strong>Description:</strong> Developed a Dynamics 365 CRM solution for a nonprofit to manage volunteers, members, events, and engagement reporting.</p>
+          <p><strong>Key Deliverables:</strong></p>
+          <ul class="clean">
+            <li><strong>Model-Driven App:</strong> Managed contacts, volunteers, and event participation.</li>
+            <li><strong>Volunteer Reports:</strong> Insights into volunteer activity and engagement.</li>
+            <li><strong>Event & Participation Reports:</strong> Real-time reporting on attendance and impact.</li>
+          </ul>
+        </div>
+
+        <div class="card project-card">
+          <h3>SharePoint Migration</h3>
+          <p><strong>Tools & Technology:</strong> SharePoint 2013, SharePoint 2016</p>
+          <p><strong>Description:</strong> Led the migration of a housing management system from SharePoint 2013 to SharePoint 2016 with minimal downtime and preserved business continuity.</p>
+          <p><strong>Key Deliverables:</strong></p>
+          <ul class="clean">
+            <li><strong>Content Database Migration:</strong> Migrated 6–7 TB of data with integrity checks.</li>
+            <li><strong>Custom Solution Migration:</strong> Upgraded and redeployed 48 custom solutions.</li>
+            <li><strong>Workflow & Task Migration:</strong> Preserved workflows, timer jobs, and scheduled tasks.</li>
+          </ul>
         </div>
       </div>
     </div>
