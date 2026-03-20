@@ -395,6 +395,51 @@
                   </p>
                 </div>
               </div>
+              <div class="showcase-card">
+                <div
+                  class="showcase-image-wrap project-gallery-trigger"
+                  data-project="HR Intranet Portal"
+                  data-images="images/hr/1.png,images/hr/2.png,images/hr/3.png,images/hr/4.png">
+                  <img
+                    src="images/hr/1.png"
+                    alt="HR Intranet Portal"
+                    class="showcase-image" />
+                </div>
+
+                <div class="showcase-content">
+                  <h3>HR Intranet Portal</h3>
+                  <div class="showcase-tags">
+                    <span>SharePoint Online</span>
+                    <span>SPFx</span>
+                    <span>Power Automate</span>
+                  </div>
+                  <p>
+                    Power Apps code app, dataverse and workflow system for bonus and commissions.
+                  </p>
+                </div>
+              </div>
+               <div class="showcase-card">
+                <div
+                  class="showcase-image-wrap project-gallery-trigger"
+                  data-project="Power BI Sales Report"
+                  data-images="images/report/1.png,images/report/2.png,images/report/3.png,images/report/4.png,images/report/5.png">
+                  <img
+                    src="images/report/1.png"
+                    alt="Power BI Sales Report"
+                    class="showcase-image" />
+                </div>
+
+                <div class="showcase-content">
+                  <h3>Power BI Sales Report</h3>
+                  <div class="showcase-tags">
+                    <span>Airtable, Wildjar, SharePoint, SQL</span>
+                    <span>Power BI</span>
+                  </div>
+                  <p>
+                    Power Apps code app, dataverse and workflow system for bonus and commissions.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -715,6 +760,129 @@
     if (e.key === "+" || e.key === "=") zoomIn();
     if (e.key === "-") zoomOut();
   });
+</script>
+<script>
+  const showcaseTrack = document.getElementById("showcaseTrack");
+  const showcaseCards = document.querySelectorAll(".showcase-card");
+  const prevBtn = document.querySelector(".showcase-prev");
+  const nextBtn = document.querySelector(".showcase-next");
+  const dotsContainer = document.getElementById("showcaseDots");
+
+  const modal = document.getElementById("imageModal");
+  const modalImage = document.getElementById("modalImage");
+  const modalClose = document.getElementById("modalClose");
+  const showcaseImages = document.querySelectorAll(".showcase-image");
+
+  let currentIndex = 0;
+  let cardsPerView = getCardsPerView();
+
+  function getCardsPerView() {
+    if (window.innerWidth <= 768) return 1;
+    if (window.innerWidth <= 1024) return 2;
+    return 3;
+  }
+
+  function getMaxIndex() {
+    return Math.max(showcaseCards.length - cardsPerView, 0);
+  }
+
+  function createDots() {
+    dotsContainer.innerHTML = "";
+    const pages = getMaxIndex() + 1;
+
+    for (let i = 0; i < pages; i++) {
+      const dot = document.createElement("span");
+      dot.classList.add("showcase-dot");
+      if (i === currentIndex) dot.classList.add("active");
+
+      dot.addEventListener("click", () => {
+        currentIndex = i;
+        updateCarousel();
+      });
+
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    const dots = document.querySelectorAll(".showcase-dot");
+    dots.forEach((dot, i) => {
+      dot.classList.toggle("active", i === currentIndex);
+    });
+  }
+
+  function updateCarousel() {
+    const card = showcaseCards[0];
+    const cardStyle = window.getComputedStyle(card);
+    const cardWidth = card.offsetWidth;
+    const marginRight = parseInt(cardStyle.marginRight) || 0;
+    const moveAmount = cardWidth + marginRight;
+
+    showcaseTrack.style.transform = `translateX(-${currentIndex * moveAmount}px)`;
+    updateDots();
+  }
+
+  nextBtn.addEventListener("click", () => {
+    const maxIndex = getMaxIndex();
+    if (currentIndex < maxIndex) {
+      currentIndex++;
+    } else {
+      currentIndex = 0;
+    }
+    updateCarousel();
+  });
+
+  prevBtn.addEventListener("click", () => {
+    const maxIndex = getMaxIndex();
+    if (currentIndex > 0) {
+      currentIndex--;
+    } else {
+      currentIndex = maxIndex;
+    }
+    updateCarousel();
+  });
+
+  window.addEventListener("resize", () => {
+    const newCardsPerView = getCardsPerView();
+    if (newCardsPerView !== cardsPerView) {
+      cardsPerView = newCardsPerView;
+      currentIndex = Math.min(currentIndex, getMaxIndex());
+      createDots();
+      updateCarousel();
+    } else {
+      updateCarousel();
+    }
+  });
+
+  // Image modal
+  showcaseImages.forEach(img => {
+    img.addEventListener("click", () => {
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      modal.classList.add("active");
+    });
+  });
+
+  modalClose.addEventListener("click", () => {
+    modal.classList.remove("active");
+  });
+
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.classList.remove("active");
+    }
+  });
+
+  // Initialize
+  createDots();
+  updateCarousel();
+
+  // Optional autoplay
+  setInterval(() => {
+    const maxIndex = getMaxIndex();
+    currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+    updateCarousel();
+  }, 5000);
 </script>
   </body>
 </html>
