@@ -4,171 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Manish | SharePoint & Power Platform Developer</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      color: #1f2937;
-      background: #f8fafc;
-    }
-    a { text-decoration: none; color: inherit; }
-    .container {
-      width: 90%;
-      max-width: 1100px;
-      margin: auto;
-    }
-    header {
-      background: linear-gradient(135deg, #0f172a, #1d4ed8);
-      color: white;
-      padding: 70px 0;
-    }
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      max-width: 700px;
-      margin-bottom: 25px;
-      opacity: 0.95;
-    }
-    .btn-group {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .btn {
-      display: inline-block;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: 0.2s ease;
-    }
-    .btn-primary {
-      background: white;
-      color: #1d4ed8;
-    }
-    .btn-secondary {
-      border: 1px solid rgba(255,255,255,0.7);
-      color: white;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    nav {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    nav .container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 0;
-    }
-    nav ul {
-      display: flex;
-      list-style: none;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
-    nav a:hover { color: #1d4ed8; }
-    section {
-      padding: 60px 0;
-    }
-    .section-title {
-      font-size: 2rem;
-      margin-bottom: 25px;
-      color: #0f172a;
-    }
-    .grid {
-      display: grid;
-      gap: 20px;
-    }
-    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
-      align-items: stretch;
-    }
-    .project-card {
-      height: 100%;
-    }
-    .project-card h3 {
-      margin-bottom: 12px;
-    }
-    .project-card p {
-      margin-bottom: 12px;
-    }
-    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .card {
-      background: white;
-      padding: 24px;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
-      border: 1px solid #e5e7eb;
-    }
-    .card h3 {
-      margin-bottom: 10px;
-      color: #0f172a;
-    }
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .tag {
-      background: #dbeafe;
-      color: #1e40af;
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 0.85rem;
-      font-weight: bold;
-    }
-    ul.clean {
-      list-style: none;
-      padding-left: 0;
-    }
-    ul.clean li {
-      margin-bottom: 10px;
-      padding-left: 18px;
-      position: relative;
-    }
-    ul.clean li::before {
-      content: "•";
-      color: #1d4ed8;
-      position: absolute;
-      left: 0;
-      font-weight: bold;
-    }
-    .contact a {
-      color: #1d4ed8;
-      font-weight: bold;
-    }
-    footer {
-      background: #0f172a;
-      color: #cbd5e1;
-      text-align: center;
-      padding: 25px 0;
-    }
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2rem; }
-      nav .container { flex-direction: column; gap: 10px; }
-      .projects-grid { grid-template-columns: 1fr; }
-    }
-      nav .container { flex-direction: column; gap: 10px; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css"  />
+  <script src="main.js"></script>
 </head>
 <body>
-  <header>
-    <div class="container hero">
+<header>
+  <div class="container hero">
+    
+    <div class="profile-pic">
+      <img src="profile.png" alt="Manish Profile Picture">
+    </div>
+
+    <div class="hero-content">
       <h1>Manish | SharePoint & Power Platform Developer</h1>
       <p>
-        8+ years of experience building SharePoint intranets, Power Apps, Power Automate workflows,
+        6+ years of experience building SharePoint intranets, Power Apps, Power Automate workflows,
         SPFx solutions, and Microsoft 365 business applications that improve collaboration and automate operations.
       </p>
       <div class="btn-group">
@@ -176,7 +26,9 @@
         <a href="resume.pdf" class="btn btn-secondary" target="_blank">Download Resume</a>
       </div>
     </div>
-  </header>
+
+  </div>
+</header>
 
   <nav>
     <div class="container">
@@ -284,84 +136,115 @@
 
   <section id="projects">
     <div class="container">
-      <h2 class="section-title">Featured Projects</h2>
-      <div class="projects-grid">
-        <div class="card project-card">
-          <h3>Hospital Management System</h3>
-          <p><strong>Tools & Technology:</strong> SharePoint 2013/2016, C#, SQL Server</p>
-          <p><strong>Description:</strong> Developed a SharePoint-based system to manage donor information and organ/tissue storage records with structured data entry and approval workflows.</p>
-          <p><strong>Key Deliverables:</strong></p>
-          <ul class="clean">
-            <li><strong>Dashboard:</strong> Overview of donor, organ, and tissue information.</li>
-            <li><strong>Data Entry Forms:</strong> Structured forms with 5–10 tabs and detailed retrieval data capture.</li>
-            <li><strong>Approval Workflow:</strong> Streamlined approvals across system modules.</li>
-          </ul>
-        </div>
-
-        <div class="card project-card">
-          <h3>Sales Automation in SharePoint Office 365</h3>
-          <p><strong>Tools & Technology:</strong> Power Automate, Adobe Sign, Approvals</p>
-          <p><strong>Description:</strong> Built a SharePoint-based automation solution for a U.S. sales organization to streamline agreement generation, invoicing, approvals, and reporting.</p>
-          <p><strong>Key Deliverables:</strong></p>
-          <ul class="clean">
-            <li><strong>Vendor Agreement Generation:</strong> Automated agreements using department-specific templates with digital signatures.</li>
-            <li><strong>Invoice Generation:</strong> Automated invoice creation for sales transactions.</li>
-            <li><strong>Approval Workflow:</strong> Multi-level invoice approvals by department managers.</li>
-            <li><strong>Power BI Reporting:</strong> Dynamic sales reports for business insights.</li>
-          </ul>
-        </div>
-
-        <div class="card project-card">
-          <h3>Pre-Dispatch Checklist Management System (PDCMS)</h3>
-          <p><strong>Tools & Technology:</strong> Power Apps, Power Automate</p>
-          <p><strong>Description:</strong> Designed a digital pre-dispatch checklist system for freight and logistics operations to improve compliance, safety, and operational visibility.</p>
-          <p><strong>Key Deliverables:</strong></p>
-          <ul class="clean">
-            <li><strong>Canvas App:</strong> Interactive dashboard and checklist tracking for inspections.</li>
-            <li><strong>Power Automate Flows:</strong> Automated submission, confirmation, and approvals.</li>
-            <li><strong>Compliance & Safety Assurance:</strong> Enforced required checks before dispatch.</li>
-            <li><strong>Real-Time Visibility:</strong> Enabled managers to track inspection and approval status.</li>
-          </ul>
-        </div>
-
-        <div class="card project-card">
-          <h3>Learning Portal</h3>
-          <p><strong>Tools & Technology:</strong> SharePoint Online, SPFx (React), Power Automate, OneDrive, Microsoft Stream, Git, VS Code</p>
-          <p><strong>Description:</strong> Built an e-learning portal for an international NGO to train staff on contract management through structured, interactive learning modules.</p>
-          <p><strong>Key Deliverables:</strong></p>
-          <ul class="clean">
-            <li><strong>Multi-Lingual Support:</strong> English, French, and Spanish based on user preference.</li>
-            <li><strong>SPFx Web Parts:</strong> Custom News, Announcements, and Quiz components.</li>
-            <li><strong>Microsoft Stream Integration:</strong> Embedded training videos for richer learning.</li>
-            <li><strong>User & Admin Dashboards:</strong> Progress tracking and admin controls via SPFx.</li>
-            <li><strong>Certification Generation:</strong> Automatic certificates for module and final completion.</li>
-          </ul>
-        </div>
-
-        <div class="card project-card">
-          <h3>Power BI Reports with Dynamics 365</h3>
-          <p><strong>Tools & Technology:</strong> Power BI Desktop, Dataverse, Power Automate, Eventbrite, ClickDimensions</p>
-          <p><strong>Description:</strong> Developed a Dynamics 365 CRM solution for a nonprofit to manage volunteers, members, events, and engagement reporting.</p>
-          <p><strong>Key Deliverables:</strong></p>
-          <ul class="clean">
-            <li><strong>Model-Driven App:</strong> Managed contacts, volunteers, and event participation.</li>
-            <li><strong>Volunteer Reports:</strong> Insights into volunteer activity and engagement.</li>
-            <li><strong>Event & Participation Reports:</strong> Real-time reporting on attendance and impact.</li>
-          </ul>
-        </div>
-
-        <div class="card project-card">
-          <h3>SharePoint Migration</h3>
-          <p><strong>Tools & Technology:</strong> SharePoint 2013, SharePoint 2016</p>
-          <p><strong>Description:</strong> Led the migration of a housing management system from SharePoint 2013 to SharePoint 2016 with minimal downtime and preserved business continuity.</p>
-          <p><strong>Key Deliverables:</strong></p>
-          <ul class="clean">
-            <li><strong>Content Database Migration:</strong> Migrated 6–7 TB of data with integrity checks.</li>
-            <li><strong>Custom Solution Migration:</strong> Upgraded and redeployed 48 custom solutions.</li>
-            <li><strong>Workflow & Task Migration:</strong> Preserved workflows, timer jobs, and scheduled tasks.</li>
-          </ul>
+      <div class="projects-header">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="carousel-controls">
+          <button class="carousel-btn" id="prevBtn" aria-label="Previous projects">←</button>
+          <button class="carousel-btn" id="nextBtn" aria-label="Next projects">→</button>
         </div>
       </div>
+
+      <div class="projects-carousel">
+        <div class="projects-track" id="projectsTrack">
+          <div class="card project-card">
+            <h3>Hospital Management System</h3>
+            <div class="project-meta">
+              <span class="project-chip">SharePoint 2013/2016</span>
+              <span class="project-chip">C#</span>
+              <span class="project-chip">SQL Server</span>
+            </div>
+            <p class="project-summary">Built a donor and organ/tissue management solution with structured forms, approval routing, and operational visibility.</p>
+            <div class="project-highlight"><strong>Impact:</strong> Centralized donor data capture and improved approval flow across modules.</div>
+            <ul class="clean">
+              <li>Dashboard for donor, organ, and tissue overview</li>
+              <li>Multi-tab structured data entry forms</li>
+              <li>Approval workflow across departments</li>
+            </ul>
+          </div>
+
+          <div class="card project-card">
+            <h3>Sales Automation in SharePoint Office 365</h3>
+            <div class="project-meta">
+              <span class="project-chip">Power Automate</span>
+              <span class="project-chip">Adobe Sign</span>
+              <span class="project-chip">Approvals</span>
+            </div>
+            <p class="project-summary">Automated agreement generation, invoicing, approvals, and reporting for a U.S.-based sales organization.</p>
+            <div class="project-highlight"><strong>Impact:</strong> Reduced manual processing and improved sales document turnaround.</div>
+            <ul class="clean">
+              <li>Template-based vendor agreement generation</li>
+              <li>Automated invoice creation</li>
+              <li>Multi-level approvals with reporting insights</li>
+            </ul>
+          </div>
+
+          <div class="card project-card">
+            <h3>Pre-Dispatch Checklist Management System (PDCMS)</h3>
+            <div class="project-meta">
+              <span class="project-chip">Power Apps</span>
+              <span class="project-chip">Power Automate</span>
+              <span class="project-chip">Logistics</span>
+            </div>
+            <p class="project-summary">Created a digital checklist and approval solution for freight operations to improve safety and dispatch compliance.</p>
+            <div class="project-highlight"><strong>Impact:</strong> Increased real-time visibility and standardized dispatch readiness checks.</div>
+            <ul class="clean">
+              <li>Interactive inspection dashboard</li>
+              <li>Automated submission and approval flows</li>
+              <li>Compliance-focused dispatch validation</li>
+            </ul>
+          </div>
+
+          <div class="card project-card">
+            <h3>Learning Portal</h3>
+            <div class="project-meta">
+              <span class="project-chip">SharePoint Online</span>
+              <span class="project-chip">SPFx React</span>
+              <span class="project-chip">Power Automate</span>
+            </div>
+            <p class="project-summary">Built a multilingual e-learning platform for a global NGO with custom SPFx components and certification workflows.</p>
+            <div class="project-highlight"><strong>Impact:</strong> Improved training accessibility and automated certification delivery.</div>
+            <ul class="clean">
+              <li>English, French, and Spanish support</li>
+              <li>Custom SPFx web parts for quizzes and news</li>
+              <li>Admin dashboards and auto-generated certificates</li>
+            </ul>
+          </div>
+
+          <div class="card project-card">
+            <h3>Power BI Reports with Dynamics 365</h3>
+            <div class="project-meta">
+              <span class="project-chip">Power BI</span>
+              <span class="project-chip">Dataverse</span>
+              <span class="project-chip">Dynamics 365</span>
+            </div>
+            <p class="project-summary">Delivered volunteer, member, and event analytics for a nonprofit using Dynamics 365 and Power BI reporting.</p>
+            <div class="project-highlight"><strong>Impact:</strong> Enabled data-driven event planning and engagement tracking.</div>
+            <ul class="clean">
+              <li>Model-driven app for participation management</li>
+              <li>Volunteer activity and engagement reports</li>
+              <li>Real-time event attendance insights</li>
+            </ul>
+          </div>
+
+          <div class="card project-card">
+            <h3>SharePoint Migration</h3>
+            <div class="project-meta">
+              <span class="project-chip">SharePoint 2013</span>
+              <span class="project-chip">SharePoint 2016</span>
+              <span class="project-chip">Migration</span>
+            </div>
+            <p class="project-summary">Led a large-scale migration of a housing management platform while preserving custom solutions and workflows.</p>
+            <div class="project-highlight"><strong>Impact:</strong> Migrated 6–7 TB with minimal downtime and full business continuity.</div>
+            <ul class="clean">
+              <li>Large content database migration</li>
+              <li>48 custom solutions upgraded and redeployed</li>
+              <li>Workflow, timer job, and task preservation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-dots" id="carouselDots" aria-label="Project carousel pagination"></div>
     </div>
   </section>
 
@@ -373,7 +256,6 @@
           <li>Email: <a href="mailto:kushmanish59@gmail.com">kushmanish59@gmail.com</a></li>
           <li>LinkedIn: <a href="https://www.linkedin.com/in/manish-kushvah-991699176" target="_blank">linkedin.com/in/manish-kushvah-991699176</a></li>
         </ul>
-        <p style="margin-top: 15px;">Available for freelance, remote, and contract Microsoft 365 / SharePoint projects.</p>
       </div>
     </div>
   </section>
@@ -383,5 +265,87 @@
       <p>© 2026 Manish | SharePoint & Power Platform Developer</p>
     </div>
   </footer>
+
+<script>
+  (function () {
+      const track = document.getElementById('projectsTrack');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const dotsContainer = document.getElementById('carouselDots');
+      if (!track || !prevBtn || !nextBtn || !dotsContainer) return;
+
+      const cards = Array.from(track.children);
+      let currentIndex = 0;
+      let pageCount = 0;
+
+      function getCardsPerView() {
+        return window.innerWidth <= 768 ? 1 : 2;
+      }
+
+      function getMaxIndex() {
+        return Math.max(0, cards.length - getCardsPerView());
+      }
+
+      function buildDots() {
+        const cardsPerView = getCardsPerView();
+        pageCount = Math.ceil(cards.length / cardsPerView);
+        dotsContainer.innerHTML = '';
+
+        for (let i = 0; i < pageCount; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot';
+          dot.type = 'button';
+          dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
+          dot.addEventListener('click', function () {
+            currentIndex = Math.min(i * cardsPerView, getMaxIndex());
+            updateCarousel();
+          });
+          dotsContainer.appendChild(dot);
+        }
+      }
+
+      function updateDots() {
+        const cardsPerView = getCardsPerView();
+        const activePage = Math.floor(currentIndex / cardsPerView);
+        Array.from(dotsContainer.children).forEach((dot, index) => {
+          dot.classList.toggle('active', index === activePage);
+        });
+      }
+
+      function updateCarousel() {
+        const maxIndex = getMaxIndex();
+        if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+        const cardWidth = cards[0].getBoundingClientRect().width;
+        const gap = 24;
+        const offset = currentIndex * (cardWidth + gap);
+        track.style.transform = `translateX(-${offset}px)`;
+
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex >= maxIndex;
+        updateDots();
+      }
+
+      prevBtn.addEventListener('click', function () {
+        const step = getCardsPerView();
+        currentIndex = Math.max(0, currentIndex - step);
+        updateCarousel();
+      });
+
+      nextBtn.addEventListener('click', function () {
+        const step = getCardsPerView();
+        currentIndex = Math.min(getMaxIndex(), currentIndex + step);
+        updateCarousel();
+      });
+
+      window.addEventListener('resize', function () {
+        buildDots();
+        updateCarousel();
+      });
+
+      buildDots();
+      updateCarousel();
+    })();
+</script>
 </body>
 </html>
