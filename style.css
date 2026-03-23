@@ -343,6 +343,10 @@
   }
 }
 
+.gallery-stage{
+touch-action: pan-y;
+}
+
 /* =========================
    PREMIUM PROJECT SHOWCASE
 ========================= */
@@ -773,4 +777,33 @@
 #certifications .section-title {
   color: #fff;
   text-align: center;
+}
+
+
+.showcase-wrapper {
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.showcase-track {
+  display: flex;
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+.showcase-image {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+.projects-wrapper {
+  overflow: hidden;
+  touch-action: pan-y;
+}
+
+.projects-track {
+  display: flex;
+  gap: 24px; /* must match JS gap */
+  transition: transform 0.4s ease;
+  will-change: transform;
 }

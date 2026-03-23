@@ -160,12 +160,10 @@
           <div class="card">
             <h3>Other Skills</h3>
             <div class="tag-list">
-              <span class="tag">OnePlan.AI</span>
               <span class="tag">Snow Atlas</span>
               <span class="tag">Dynamics 365</span>
               <span class="tag">Google Analytics</span>
               <span class="tag">Snowflake</span>
-              <span class="tag">Agiloft</span>
             </div>
           </div>
         </div>
@@ -542,249 +540,501 @@
       </div>
     </footer>
 
-    <script>
-      (function () {
-        const track = document.getElementById("projectsTrack");
-        const prevBtn = document.getElementById("prevBtn");
-        const nextBtn = document.getElementById("nextBtn");
-        const dotsContainer = document.getElementById("carouselDots");
-        if (!track || !prevBtn || !nextBtn || !dotsContainer) return;
+<script>
+(function () {
+  const track = document.getElementById("projectsTrack");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const dotsContainer = document.getElementById("carouselDots");
 
-        const cards = Array.from(track.children);
-        let currentIndex = 0;
-        let pageCount = 0;
+  if (!track || !prevBtn || !nextBtn || !dotsContainer) return;
 
-        function getCardsPerView() {
-          return window.innerWidth <= 768 ? 1 : 2;
-        }
+  const cards = Array.from(track.children);
+  const wrapper = track.parentElement; // swipe should be on wrapper, not moving track
 
-        function getMaxIndex() {
-          return Math.max(0, cards.length - getCardsPerView());
-        }
+  let currentIndex = 0;
+  let pageCount = 0;
 
-        function buildDots() {
-          const cardsPerView = getCardsPerView();
-          pageCount = Math.ceil(cards.length / cardsPerView);
-          dotsContainer.innerHTML = "";
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+  let isSwiping = false;
 
-          for (let i = 0; i < pageCount; i++) {
-            const dot = document.createElement("button");
-            dot.className = "carousel-dot";
-            dot.type = "button";
-            dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
-            dot.addEventListener("click", function () {
-              currentIndex = Math.min(i * cardsPerView, getMaxIndex());
-              updateCarousel();
-            });
-            dotsContainer.appendChild(dot);
-          }
-        }
+  const swipeThreshold = 50;
 
-        function updateDots() {
-          const cardsPerView = getCardsPerView();
-          const activePage = Math.floor(currentIndex / cardsPerView);
-          Array.from(dotsContainer.children).forEach((dot, index) => {
-            dot.classList.toggle("active", index === activePage);
-          });
-        }
+  function getCardsPerView() {
+    return window.innerWidth <= 768 ? 1 : 2;
+  }
 
-        function updateCarousel() {
-          const maxIndex = getMaxIndex();
-          if (currentIndex > maxIndex) currentIndex = maxIndex;
+  function getMaxIndex() {
+    return Math.max(0, cards.length - getCardsPerView());
+  }
 
-          const cardWidth = cards[0].getBoundingClientRect().width;
-          const gap = 24;
-          const offset = currentIndex * (cardWidth + gap);
-          track.style.transform = `translateX(-${offset}px)`;
+  function buildDots() {
+    const cardsPerView = getCardsPerView();
+    pageCount = Math.ceil(cards.length / cardsPerView);
+    dotsContainer.innerHTML = "";
 
-          prevBtn.disabled = currentIndex === 0;
-          nextBtn.disabled = currentIndex >= maxIndex;
-          updateDots();
-        }
+    for (let i = 0; i < pageCount; i++) {
+      const dot = document.createElement("button");
+      dot.className = "carousel-dot";
+      dot.type = "button";
+      dot.setAttribute("aria-label", `Go to slide ${i + 1}`);
 
-        prevBtn.addEventListener("click", function () {
-          const step = getCardsPerView();
-          currentIndex = Math.max(0, currentIndex - step);
-          updateCarousel();
-        });
-
-        nextBtn.addEventListener("click", function () {
-          const step = getCardsPerView();
-          currentIndex = Math.min(getMaxIndex(), currentIndex + step);
-          updateCarousel();
-        });
-
-        window.addEventListener("resize", function () {
-          buildDots();
-          updateCarousel();
-        });
-
-        buildDots();
+      dot.addEventListener("click", function () {
+        currentIndex = Math.min(i * cardsPerView, getMaxIndex());
         updateCarousel();
-      })();
-    </script>
-    <script>
-  const galleryTriggers = document.querySelectorAll(".project-gallery-trigger");
-
-  const galleryModal = document.getElementById("galleryModal");
-  const galleryOverlay = document.getElementById("galleryOverlay");
-  const galleryClose = document.getElementById("galleryClose");
-  const galleryTitle = document.getElementById("galleryTitle");
-  const galleryMainImage = document.getElementById("galleryMainImage");
-  const galleryPrev = document.getElementById("galleryPrev");
-  const galleryNext = document.getElementById("galleryNext");
-  const galleryThumbnails = document.getElementById("galleryThumbnails");
-  const galleryStage = document.getElementById("galleryStage");
-
-  const zoomInBtn = document.getElementById("zoomInBtn");
-  const zoomOutBtn = document.getElementById("zoomOutBtn");
-  const zoomResetBtn = document.getElementById("zoomResetBtn");
-
-  let currentImages = [];
-  let currentImageIndex = 0;
-  let zoomLevel = 1;
-  let translateX = 0;
-  let translateY = 0;
-  let isDragging = false;
-  let startX = 0;
-  let startY = 0;
-
-  function openGallery(title, images) {
-    currentImages = images;
-    currentImageIndex = 0;
-    galleryTitle.textContent = title;
-    galleryModal.classList.add("active");
-    document.body.style.overflow = "hidden";
-    renderGallery();
-  }
-
-  function closeGallery() {
-    galleryModal.classList.remove("active");
-    document.body.style.overflow = "";
-    resetZoom();
-  }
-
-  function renderGallery() {
-    galleryMainImage.src = currentImages[currentImageIndex];
-    updateThumbnails();
-    resetZoom();
-  }
-
-  function updateThumbnails() {
-    galleryThumbnails.innerHTML = "";
-
-    currentImages.forEach((imgSrc, index) => {
-      const thumb = document.createElement("img");
-      thumb.src = imgSrc;
-      thumb.className = "gallery-thumb";
-      if (index === currentImageIndex) thumb.classList.add("active");
-
-      thumb.addEventListener("click", () => {
-        currentImageIndex = index;
-        renderGallery();
       });
 
-      galleryThumbnails.appendChild(thumb);
+      dotsContainer.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    const cardsPerView = getCardsPerView();
+    const activePage = Math.floor(currentIndex / cardsPerView);
+
+    Array.from(dotsContainer.children).forEach((dot, index) => {
+      dot.classList.toggle("active", index === activePage);
     });
   }
 
-  function showNextImage() {
-    currentImageIndex = (currentImageIndex + 1) % currentImages.length;
-    renderGallery();
+  function updateCarousel() {
+    if (!cards.length) return;
+
+    const maxIndex = getMaxIndex();
+    if (currentIndex > maxIndex) currentIndex = maxIndex;
+
+    const cardWidth = cards[0].getBoundingClientRect().width;
+    const gap = 24; // must match CSS gap
+    const offset = currentIndex * (cardWidth + gap);
+
+    track.style.transform = `translateX(-${offset}px)`;
+
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= maxIndex;
+
+    updateDots();
   }
 
-  function showPrevImage() {
-    currentImageIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
-    renderGallery();
+  function goPrev() {
+    const step = getCardsPerView();
+    currentIndex = Math.max(0, currentIndex - step);
+    updateCarousel();
   }
 
-  function applyTransform() {
-    galleryMainImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${zoomLevel})`;
+  function goNext() {
+    const step = getCardsPerView();
+    currentIndex = Math.min(getMaxIndex(), currentIndex + step);
+    updateCarousel();
   }
 
-  function resetZoom() {
-    zoomLevel = 1;
-    translateX = 0;
-    translateY = 0;
-    applyTransform();
-  }
+  prevBtn.addEventListener("click", function () {
+    goPrev();
+  });
 
-  function zoomIn() {
-    zoomLevel = Math.min(zoomLevel + 0.25, 4);
-    applyTransform();
-  }
+  nextBtn.addEventListener("click", function () {
+    goNext();
+  });
 
-  function zoomOut() {
-    zoomLevel = Math.max(zoomLevel - 0.25, 1);
-    if (zoomLevel === 1) {
-      translateX = 0;
-      translateY = 0;
+  /* ---------- TOUCH SWIPE ---------- */
+  wrapper.addEventListener("touchstart", function (e) {
+    const touch = e.touches[0];
+
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchEndX = touch.clientX;
+    touchEndY = touch.clientY;
+
+    isSwiping = false;
+  }, { passive: true });
+
+  wrapper.addEventListener("touchmove", function (e) {
+    const touch = e.touches[0];
+
+    touchEndX = touch.clientX;
+    touchEndY = touch.clientY;
+
+    const diffX = Math.abs(touchStartX - touchEndX);
+    const diffY = Math.abs(touchStartY - touchEndY);
+
+    // mark as swiping only if mostly horizontal
+    if (diffX > 10 && diffX > diffY) {
+      isSwiping = true;
     }
-    applyTransform();
-  }
+  }, { passive: true });
 
-  galleryTriggers.forEach(trigger => {
-    trigger.addEventListener("click", () => {
-      const title = trigger.dataset.project;
-      const images = trigger.dataset.images.split(",").map(img => img.trim());
-      openGallery(title, images);
-    });
-  });
+  wrapper.addEventListener("touchend", function () {
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
 
-  galleryClose.addEventListener("click", closeGallery);
-  galleryOverlay.addEventListener("click", closeGallery);
-  galleryNext.addEventListener("click", showNextImage);
-  galleryPrev.addEventListener("click", showPrevImage);
-
-  zoomInBtn.addEventListener("click", zoomIn);
-  zoomOutBtn.addEventListener("click", zoomOut);
-  zoomResetBtn.addEventListener("click", resetZoom);
-
-  // Mouse wheel zoom
-  galleryStage.addEventListener("wheel", (e) => {
-    e.preventDefault();
-    if (e.deltaY < 0) {
-      zoomIn();
-    } else {
-      zoomOut();
+    if (
+      Math.abs(diffX) > swipeThreshold &&
+      Math.abs(diffX) > Math.abs(diffY)
+    ) {
+      if (diffX > 0) {
+        goNext(); // swipe left
+      } else {
+        goPrev(); // swipe right
+      }
     }
+
+    setTimeout(() => {
+      isSwiping = false;
+    }, 50);
   });
 
-  // Drag / pan when zoomed
-  galleryStage.addEventListener("mousedown", (e) => {
-    if (zoomLevel <= 1) return;
-    isDragging = true;
-    startX = e.clientX - translateX;
-    startY = e.clientY - translateY;
-    galleryStage.style.cursor = "grabbing";
+  window.addEventListener("resize", function () {
+    buildDots();
+    updateCarousel();
   });
 
-  window.addEventListener("mousemove", (e) => {
-    if (!isDragging) return;
-    translateX = e.clientX - startX;
-    translateY = e.clientY - startY;
-    applyTransform();
-  });
-
-  window.addEventListener("mouseup", () => {
-    isDragging = false;
-    galleryStage.style.cursor = zoomLevel > 1 ? "grab" : "default";
-  });
-
-  // Keyboard controls
-  window.addEventListener("keydown", (e) => {
-    if (!galleryModal.classList.contains("active")) return;
-
-    if (e.key === "Escape") closeGallery();
-    if (e.key === "ArrowRight") showNextImage();
-    if (e.key === "ArrowLeft") showPrevImage();
-    if (e.key === "+" || e.key === "=") zoomIn();
-    if (e.key === "-") zoomOut();
-  });
+  buildDots();
+  updateCarousel();
+})();
 </script>
 <script>
+
+const galleryTriggers = document.querySelectorAll(".project-gallery-trigger");
+
+const galleryModal = document.getElementById("galleryModal");
+const galleryOverlay = document.getElementById("galleryOverlay");
+const galleryClose = document.getElementById("galleryClose");
+const galleryTitle = document.getElementById("galleryTitle");
+const galleryMainImage = document.getElementById("galleryMainImage");
+const galleryPrev = document.getElementById("galleryPrev");
+const galleryNext = document.getElementById("galleryNext");
+const galleryThumbnails = document.getElementById("galleryThumbnails");
+const galleryStage = document.getElementById("galleryStage");
+
+const zoomInBtn = document.getElementById("zoomInBtn");
+const zoomOutBtn = document.getElementById("zoomOutBtn");
+const zoomResetBtn = document.getElementById("zoomResetBtn");
+
+let currentImages = [];
+let currentImageIndex = 0;
+
+let zoomLevel = 1;
+let translateX = 0;
+let translateY = 0;
+
+let isDragging = false;
+let startX = 0;
+let startY = 0;
+
+let touchStartX = 0;
+let touchStartY = 0;
+let touchCurrentX = 0;
+let touchCurrentY = 0;
+
+const swipeThreshold = 50;
+
+
+
+/* ---------- OPEN / CLOSE ---------- */
+
+function openGallery(title, images) {
+  currentImages = images;
+  currentImageIndex = 0;
+
+  galleryTitle.textContent = title;
+  galleryModal.classList.add("active");
+
+  document.body.style.overflow = "hidden";
+
+  renderGallery();
+}
+
+function closeGallery() {
+  galleryModal.classList.remove("active");
+  document.body.style.overflow = "";
+  resetZoom();
+}
+
+
+
+/* ---------- RENDER ---------- */
+
+function renderGallery() {
+  galleryMainImage.src = currentImages[currentImageIndex];
+  updateThumbnails();
+  resetZoom();
+}
+
+function updateThumbnails() {
+
+  galleryThumbnails.innerHTML = "";
+
+  currentImages.forEach((imgSrc, index) => {
+
+    const thumb = document.createElement("img");
+    thumb.src = imgSrc;
+    thumb.className = "gallery-thumb";
+
+    if (index === currentImageIndex) {
+      thumb.classList.add("active");
+    }
+
+    thumb.addEventListener("click", () => {
+      currentImageIndex = index;
+      renderGallery();
+    });
+
+    galleryThumbnails.appendChild(thumb);
+
+  });
+}
+
+
+
+/* ---------- IMAGE NAVIGATION ---------- */
+
+function showNextImage() {
+  currentImageIndex =
+    (currentImageIndex + 1) % currentImages.length;
+
+  renderGallery();
+}
+
+function showPrevImage() {
+  currentImageIndex =
+    (currentImageIndex - 1 + currentImages.length) %
+    currentImages.length;
+
+  renderGallery();
+}
+
+
+
+/* ---------- ZOOM ---------- */
+
+function applyTransform() {
+  galleryMainImage.style.transform =
+    `translate(${translateX}px, ${translateY}px) scale(${zoomLevel})`;
+}
+
+function resetZoom() {
+  zoomLevel = 1;
+  translateX = 0;
+  translateY = 0;
+
+  galleryStage.style.cursor = "default";
+
+  applyTransform();
+}
+
+function zoomIn() {
+  zoomLevel = Math.min(zoomLevel + 0.25, 4);
+
+  galleryStage.style.cursor =
+    zoomLevel > 1 ? "grab" : "default";
+
+  applyTransform();
+}
+
+function zoomOut() {
+  zoomLevel = Math.max(zoomLevel - 0.25, 1);
+
+  if (zoomLevel === 1) {
+    translateX = 0;
+    translateY = 0;
+  }
+
+  galleryStage.style.cursor =
+    zoomLevel > 1 ? "grab" : "default";
+
+  applyTransform();
+}
+
+
+
+/* ---------- TRIGGER OPEN ---------- */
+
+galleryTriggers.forEach(trigger => {
+
+  trigger.addEventListener("click", () => {
+
+    const title = trigger.dataset.project;
+
+    const images =
+      trigger.dataset.images
+        .split(",")
+        .map(img => img.trim());
+
+    openGallery(title, images);
+
+  });
+
+});
+
+
+
+/* ---------- BUTTON CONTROLS ---------- */
+
+galleryClose.addEventListener("click", closeGallery);
+galleryOverlay.addEventListener("click", closeGallery);
+
+galleryNext.addEventListener("click", showNextImage);
+galleryPrev.addEventListener("click", showPrevImage);
+
+zoomInBtn.addEventListener("click", zoomIn);
+zoomOutBtn.addEventListener("click", zoomOut);
+zoomResetBtn.addEventListener("click", resetZoom);
+
+
+
+/* ---------- MOUSE WHEEL ZOOM ---------- */
+
+galleryStage.addEventListener("wheel", (e) => {
+
+  e.preventDefault();
+
+  if (e.deltaY < 0) {
+    zoomIn();
+  } else {
+    zoomOut();
+  }
+
+});
+
+
+
+/* ---------- MOUSE DRAG PAN ---------- */
+
+galleryStage.addEventListener("mousedown", (e) => {
+
+  if (zoomLevel <= 1) return;
+
+  isDragging = true;
+
+  startX = e.clientX - translateX;
+  startY = e.clientY - translateY;
+
+  galleryStage.style.cursor = "grabbing";
+
+});
+
+window.addEventListener("mousemove", (e) => {
+
+  if (!isDragging) return;
+
+  translateX = e.clientX - startX;
+  translateY = e.clientY - startY;
+
+  applyTransform();
+
+});
+
+window.addEventListener("mouseup", () => {
+
+  isDragging = false;
+
+  galleryStage.style.cursor =
+    zoomLevel > 1 ? "grab" : "default";
+
+});
+
+
+
+/* ---------- TOUCH SUPPORT ---------- */
+
+galleryStage.addEventListener("touchstart", (e) => {
+
+  const touch = e.touches[0];
+
+  touchStartX = touch.clientX;
+  touchStartY = touch.clientY;
+
+  touchCurrentX = touch.clientX;
+  touchCurrentY = touch.clientY;
+
+  if (zoomLevel > 1) {
+
+    startX = touch.clientX - translateX;
+    startY = touch.clientY - translateY;
+
+    isDragging = true;
+
+  }
+
+}, { passive: true });
+
+
+
+galleryStage.addEventListener("touchmove", (e) => {
+
+  const touch = e.touches[0];
+
+  touchCurrentX = touch.clientX;
+  touchCurrentY = touch.clientY;
+
+  if (zoomLevel > 1 && isDragging) {
+
+    e.preventDefault();
+
+    translateX = touch.clientX - startX;
+    translateY = touch.clientY - startY;
+
+    applyTransform();
+
+  }
+
+}, { passive: false });
+
+
+
+galleryStage.addEventListener("touchend", () => {
+
+  if (zoomLevel > 1) {
+
+    isDragging = false;
+    return;
+
+  }
+
+  const diffX = touchStartX - touchCurrentX;
+  const diffY = touchStartY - touchCurrentY;
+
+  if (
+    Math.abs(diffX) > swipeThreshold &&
+    Math.abs(diffX) > Math.abs(diffY)
+  ) {
+
+    if (diffX > 0) {
+      showNextImage();
+    } else {
+      showPrevImage();
+    }
+
+  }
+
+});
+
+
+
+/* ---------- KEYBOARD ---------- */
+
+window.addEventListener("keydown", (e) => {
+
+  if (!galleryModal.classList.contains("active")) return;
+
+  if (e.key === "Escape") closeGallery();
+  if (e.key === "ArrowRight") showNextImage();
+  if (e.key === "ArrowLeft") showPrevImage();
+  if (e.key === "+" || e.key === "=") zoomIn();
+  if (e.key === "-") zoomOut();
+
+});
+
+</script>
+<script>
+(() => {
   const showcaseTrack = document.getElementById("showcaseTrack");
+  if (!showcaseTrack) return;
+
   const showcaseCards = document.querySelectorAll(".showcase-card");
+  const showcaseWrapper = showcaseTrack.parentElement;
   const prevBtn = document.querySelector(".showcase-prev");
   const nextBtn = document.querySelector(".showcase-next");
   const dotsContainer = document.getElementById("showcaseDots");
@@ -796,6 +1046,14 @@
 
   let currentIndex = 0;
   let cardsPerView = getCardsPerView();
+
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+  let isSwiping = false;
+  const swipeThreshold = 50;
+  let autoPlayInterval;
 
   function getCardsPerView() {
     if (window.innerWidth <= 768) return 1;
@@ -819,6 +1077,7 @@
       dot.addEventListener("click", () => {
         currentIndex = i;
         updateCarousel();
+        startAutoplay();
       });
 
       dotsContainer.appendChild(dot);
@@ -833,6 +1092,8 @@
   }
 
   function updateCarousel() {
+    if (!showcaseCards.length) return;
+
     const card = showcaseCards[0];
     const cardStyle = window.getComputedStyle(card);
     const cardWidth = card.offsetWidth;
@@ -843,67 +1104,123 @@
     updateDots();
   }
 
-  nextBtn.addEventListener("click", () => {
+  function goNext() {
     const maxIndex = getMaxIndex();
-    if (currentIndex < maxIndex) {
-      currentIndex++;
-    } else {
-      currentIndex = 0;
-    }
+    currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
     updateCarousel();
+  }
+
+  function goPrev() {
+    const maxIndex = getMaxIndex();
+    currentIndex = currentIndex > 0 ? currentIndex - 1 : maxIndex;
+    updateCarousel();
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    autoPlayInterval = setInterval(() => {
+      goNext();
+    }, 5000);
+  }
+
+  function stopAutoplay() {
+    if (autoPlayInterval) clearInterval(autoPlayInterval);
+  }
+
+  nextBtn?.addEventListener("click", () => {
+    goNext();
+    startAutoplay();
   });
 
-  prevBtn.addEventListener("click", () => {
-    const maxIndex = getMaxIndex();
-    if (currentIndex > 0) {
-      currentIndex--;
-    } else {
-      currentIndex = maxIndex;
-    }
-    updateCarousel();
+  prevBtn?.addEventListener("click", () => {
+    goPrev();
+    startAutoplay();
   });
 
   window.addEventListener("resize", () => {
     const newCardsPerView = getCardsPerView();
+
     if (newCardsPerView !== cardsPerView) {
       cardsPerView = newCardsPerView;
       currentIndex = Math.min(currentIndex, getMaxIndex());
       createDots();
-      updateCarousel();
-    } else {
-      updateCarousel();
     }
+
+    updateCarousel();
   });
 
-  // // Image modal
-  // showcaseImages.forEach(img => {
-  //   img.addEventListener("click", () => {
-  //     modalImage.src = img.src;
-  //     modalImage.alt = img.alt;
-  //     modal.classList.add("active");
-  //   });
-  // });
+  // Swipe on wrapper
+  showcaseWrapper.addEventListener("touchstart", (e) => {
+    const touch = e.touches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+    touchEndX = touch.clientX;
+    touchEndY = touch.clientY;
+    isSwiping = false;
+    stopAutoplay();
+  }, { passive: true });
 
-  modalClose.addEventListener("click", () => {
+  showcaseWrapper.addEventListener("touchmove", (e) => {
+    const touch = e.touches[0];
+    touchEndX = touch.clientX;
+    touchEndY = touch.clientY;
+
+    const diffX = Math.abs(touchStartX - touchEndX);
+    const diffY = Math.abs(touchStartY - touchEndY);
+
+    if (diffX > 10 && diffX > diffY) {
+      isSwiping = true;
+    }
+  }, { passive: true });
+
+  showcaseWrapper.addEventListener("touchend", () => {
+    const diffX = touchStartX - touchEndX;
+    const diffY = touchStartY - touchEndY;
+
+    if (Math.abs(diffX) > swipeThreshold && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) {
+        goNext();
+      } else {
+        goPrev();
+      }
+    }
+
+    setTimeout(() => {
+      isSwiping = false;
+    }, 50);
+
+    startAutoplay();
+  });
+
+  // Image modal
+  showcaseImages.forEach(img => {
+    img.addEventListener("click", (e) => {
+      if (isSwiping) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      modalImage.src = img.src;
+      modalImage.alt = img.alt;
+      modal.classList.add("active");
+    });
+  });
+
+  modalClose?.addEventListener("click", () => {
     modal.classList.remove("active");
   });
 
-  modal.addEventListener("click", (e) => {
+  modal?.addEventListener("click", (e) => {
     if (e.target === modal) {
       modal.classList.remove("active");
     }
   });
 
-  // Initialize
   createDots();
   updateCarousel();
-
-  // Optional autoplay
-  setInterval(() => {
-    const maxIndex = getMaxIndex();
-    currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
-    updateCarousel();
-  }, 5000);
+  startAutoplay();
+})();
 </script>
   </body>
 </html>
