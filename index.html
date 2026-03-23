@@ -1193,19 +1193,19 @@ window.addEventListener("keydown", (e) => {
   });
 
   // Image modal
-  showcaseImages.forEach(img => {
-    img.addEventListener("click", (e) => {
-      if (isSwiping) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
+  // showcaseImages.forEach(img => {
+  //   img.addEventListener("click", (e) => {
+  //     if (isSwiping) {
+  //       e.preventDefault();
+  //       e.stopPropagation();
+  //       return;
+  //     }
 
-      modalImage.src = img.src;
-      modalImage.alt = img.alt;
-      modal.classList.add("active");
-    });
-  });
+  //     modalImage.src = img.src;
+  //     modalImage.alt = img.alt;
+  //     modal.classList.add("active");
+  //   });
+  // });
 
   modalClose?.addEventListener("click", () => {
     modal.classList.remove("active");
