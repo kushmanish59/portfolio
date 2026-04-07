@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio | Manish</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --bg2: #111827;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.1);
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --primary: #3b82f6;
+      --primary2: #2563eb;
+      --success: #22c55e;
+      --shadow: 0 20px 60px rgba(0,0,0,0.35);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; font-family: Inter, Arial, sans-serif; }
+    body {
+      background: radial-gradient(circle at top right, #1e293b 0%, var(--bg) 45%, #020617 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button { font: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(14px);
+      background: rgba(11, 17, 32, 0.75);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .brand-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), #60a5fa);
+      color: white;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(59,130,246,0.35);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--primary2));
+      border-color: transparent;
+      box-shadow: 0 10px 24px rgba(59,130,246,0.25);
+    }
+
+    .wrapper {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 42px); }
+    .hero p { margin: 0; color: var(--muted); line-height: 1.6; max-width: 780px; }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .search-wrap, .filters {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      border-radius: 18px;
+      padding: 14px;
+      backdrop-filter: blur(10px);
+    }
+
+    .search-wrap input, .filters select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      outline: none;
+    }
+
+    .filters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr 280px;
+      gap: 16px;
+      min-height: 70vh;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      border-radius: 22px;
+      padding: 14px;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+      min-height: 0;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #93c5fd;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: calc(100vh - 280px);
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .project-item {
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    .project-item:hover,
+    .project-item.active {
+      background: rgba(59,130,246,0.14);
+      border-color: rgba(59,130,246,0.35);
+      transform: translateY(-1px);
+    }
+
+    .project-item h3 {
+      margin: 0 0 6px;
+      font-size: 16px;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      color: #cbd5e1;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .project-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .viewer-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .viewer-title h2 { margin: 0 0 6px; font-size: clamp(22px, 3vw, 32px); }
+    .viewer-title p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+    .viewer-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .main-image-wrap {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+    }
+
+    .main-image {
+      width: 100%;
+      max-height: 68vh;
+      object-fit: contain;
+      display: block;
+      cursor: zoom-in;
+      user-select: none;
+      -webkit-user-drag: none;
+      background: #0f172a;
+    }
+
+    .hint {
+      position: absolute;
+      right: 14px;
+      bottom: 14px;
+      font-size: 12px;
+      color: #e2e8f0;
+      background: rgba(2,6,23,0.75);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 8px 10px;
+      border-radius: 12px;
+    }
+
+    .details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .detail-card {
+      padding: 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .detail-card h4 { margin: 0 0 8px; }
+    .detail-card p, .detail-card ul {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .detail-card ul { padding-left: 18px; }
+
+    .thumb-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: calc(100vh - 280px);
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .thumb {
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      background: rgba(255,255,255,0.03);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .thumb.active {
+      border-color: rgba(59,130,246,0.7);
+      box-shadow: 0 0 0 4px rgba(59,130,246,0.12);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .thumb-label {
+      padding: 8px 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(2,6,23,0.92);
+      display: none;
+      z-index: 999;
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .modal.active { display: block; }
+
+    .modal-topbar {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .modal-controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      pointer-events: auto;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.08);
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .modal-hint {
+      color: #cbd5e1;
+      font-size: 13px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 10px 12px;
+      border-radius: 12px;
+      pointer-events: auto;
+    }
+
+    .modal-stage {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      cursor: grab;
+    }
+
+    .modal-stage.dragging { cursor: grabbing; }
+
+    .zoom-image {
+      max-width: 90vw;
+      max-height: 86vh;
+      transform-origin: center center;
+      will-change: transform;
+      user-select: none;
+      -webkit-user-drag: none;
+      touch-action: none;
+    }
+
+    @media (max-width: 1200px) {
+      .layout {
+        grid-template-columns: 280px 1fr;
+      }
+      .thumb-panel { grid-column: 1 / -1; }
+      .thumb-list {
+        flex-direction: row;
+        max-height: unset;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+      .thumb { min-width: 180px; }
+    }
+
+    @media (max-width: 900px) {
+      .toolbar, .details, .layout {
+        grid-template-columns: 1fr;
+      }
+      .project-list, .thumb-list {
+        max-height: unset;
+      }
+      .main-image { max-height: 50vh; }
+      .hero { padding: 16px; }
+      .wrapper { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-badge">M</div>
+        <span>Portfolio Showcase</span>
+      </div>
+      <div class="top-actions">
+        <a href="index.html" class="btn">← Back Home</a>
+        <a href="resume.pdf" class="btn btn-primary" target="_blank">Download Resume</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrapper">
+    <section class="hero">
+      <div>
+        <h1>Projects, Built for Easy Browsing</h1>
+        <p>
+          Browse projects without endless scrolling. Select a project, switch between screenshots instantly, and click any image to open a full-screen zoom viewer with mouse wheel zoom, drag pan, double click zoom, and touch pinch-to-zoom.
+        </p>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <div class="search-wrap">
+        <input type="text" id="searchInput" placeholder="Search projects by name, tech, or keyword..." />
+      </div>
+      <div class="filters">
+        <div class="filters-grid">
+          <select id="categoryFilter">
+            <option value="all">All Categories</option>
+          </select>
+          <select id="techFilter">
+            <option value="all">All Technologies</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <aside class="panel">
+        <div class="panel-title">Projects</div>
+        <div class="project-list" id="projectList"></div>
+      </aside>
+
+      <section class="panel">
+        <div class="viewer-header">
+          <div class="viewer-title">
+            <h2 id="projectTitle">Select a project</h2>
+            <p id="projectDesc">Choose a project from the left to preview screenshots and details.</p>
+          </div>
+          <div class="viewer-actions">
+            <button class="btn" id="prevImageBtn">◀ Prev</button>
+            <button class="btn" id="nextImageBtn">Next ▶</button>
+            </div>
+        </div>
+
+        <div class="main-image-wrap">
+          <img id="mainImage" class="main-image" src="" alt="Project Preview" />
+          <div class="hint">Click image • Mouse wheel zoom • Touch pinch</div>
+        </div>
+
+        <div class="details">
+          <div class="detail-card">
+            <h4>Tools & Stack</h4>
+            <div id="projectTags" class="project-meta"></div>
+          </div>
+          <div class="detail-card">
+            <h4>Highlights</h4>
+            <ul id="projectHighlights"></ul>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel thumb-panel">
+        <div class="panel-title">Screens</div>
+        <div class="thumb-list" id="thumbList"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="modal" id="imageModal">
+    <div class="modal-topbar">
+      <div class="modal-hint">Wheel = zoom • Drag = pan • Double click = zoom • Pinch = touch zoom • ESC = close</div>
+      <div class="modal-controls">
+        <button class="icon-btn" id="modalPrevBtn">◀</button>
+        <button class="icon-btn" id="modalNextBtn">▶</button>
+        <button class="icon-btn" id="zoomOutBtn">−</button>
+        <button class="icon-btn" id="resetZoomBtn">⟳</button>
+        <button class="icon-btn" id="zoomInBtn">＋</button>
+        <button class="icon-btn" id="closeModalBtn">✕</button>
+      </div>
+    </div>
+    <div class="modal-stage" id="modalStage">
+      <img id="zoomImage" class="zoom-image" src="" alt="Zoomed Project Image" />
+    </div>
+  </div>
+
+  <script>
+    const projects = [
+      {
+        name: 'Corporate Intranet Portal',
+        category: 'SharePoint',
+        tech: ['SharePoint', 'SPFx', 'Microsoft 365'],
+        description: 'Modern SharePoint intranet with branded landing pages, navigation, quick links, and department content experience.',
+        highlights: [
+          'Modern homepage and department landing pages',
+          'Improved navigation and employee content discoverability',
+          'Reusable components and cleaner visual hierarchy'
+        ],
+        images: [
+          { src: 'images/CoporateSite.png', label: 'Homepage' },
+          { src: 'images/spfx/home.png', label: 'SPFx Home' }
+        ]
+      },
+      {
+        name: 'Business Central Integration App',
+        category: 'Power Apps',
+        tech: ['Power Apps', 'Power Automate', 'Business Central'],
+        description: 'Business process app integrated with Business Central for data visibility, workflows, and operational management.',
+        highlights: [
+          'Connected app with external business data',
+          'Workflow automation and approval logic',
+          'Responsive UI for operational use cases'
+        ],
+        images: [
+          { src: 'images/bc/1.png', label: 'Dashboard' },
+          { src: 'images/bc/2.png', label: 'Data View' },
+          { src: 'images/bc/3.png', label: 'Workflow Screen' }
+        ]
+      },
+      {
+        name: 'HR Management Solution',
+        category: 'Power Platform',
+        tech: ['Power Apps', 'Dataverse', 'Power Automate'],
+        description: 'Internal HR app for employee operations, request handling, approvals, and centralized data tracking.',
+        highlights: [
+          'Employee request workflows',
+          'Approval routing and status tracking',
+          'Dataverse-backed structured data model'
+        ],
+        images: [
+          { src: 'images/hr/1.png', label: 'Employee Dashboard' },
+          { src: 'images/hr/2.png', label: 'Request Form' },
+          { src: 'images/hr/3.png', label: 'Approval Flow' }
+        ]
+      },
+      {
+        name: 'Reporting & Analytics Dashboard',
+        category: 'Power BI',
+        tech: ['Power BI', 'API', 'Power Platform'],
+        description: 'Executive reporting experience with KPI cards, filtered visualizations, and clean data storytelling.',
+        highlights: [
+          'KPI-focused dashboards',
+          'API-backed data connectivity',
+          'Reusable reporting patterns for stakeholders'
+        ],
+        images: [
+          { src: 'images/report/1.png', label: 'Overview' },
+          { src: 'images/report/2.png', label: 'Metrics' },
+          { src: 'images/report/3.png', label: 'Breakdown' }
+        ]
+      }
+    ];
+
+    let filteredProjects = [...projects];
+    let currentProjectIndex = 0;
+    let currentImageIndex = 0;
+
+    const projectList = document.getElementById('projectList');
+    const thumbList = document.getElementById('thumbList');
+    const mainImage = document.getElementById('mainImage');
+    const projectTitle = document.getElementById('projectTitle');
+    const projectDesc = document.getElementById('projectDesc');
+    const projectTags = document.getElementById('projectTags');
+    const projectHighlights = document.getElementById('projectHighlights');
+    const searchInput = document.getElementById('searchInput');
+    const categoryFilter = document.getElementById('categoryFilter');
+    const techFilter = document.getElementById('techFilter');
+
+    const imageModal = document.getElementById('imageModal');
+    const zoomImage = document.getElementById('zoomImage');
+    const modalStage = document.getElementById('modalStage');
+
+    function uniqueValues(arr, keyFn) {
+      return [...new Set(arr.flatMap(keyFn))];
+    }
+
+    function populateFilters() {
+      const categories = [...new Set(projects.map(p => p.category))];
+      const techs = uniqueValues(projects, p => p.tech);
+
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        categoryFilter.appendChild(opt);
+      });
+
+      techs.forEach(tech => {
+        const opt = document.createElement('option');
+        opt.value = tech;
+        opt.textContent = tech;
+        techFilter.appendChild(opt);
+      });
+    }
+
+    function applyFilters() {
+      const q = searchInput.value.toLowerCase().trim();
+      const category = categoryFilter.value;
+      const tech = techFilter.value;
+
+      filteredProjects = projects.filter(p => {
+        const matchesSearch = !q || [p.name, p.description, p.category, ...p.tech].join(' ').toLowerCase().includes(q);
+        const matchesCategory = category === 'all' || p.category === category;
+        const matchesTech = tech === 'all' || p.tech.includes(tech);
+        return matchesSearch && matchesCategory && matchesTech;
+      });
+
+      currentProjectIndex = 0;
+      currentImageIndex = 0;
+      renderProjectList();
+      renderCurrentProject();
+    }
+
+    function renderProjectList() {
+      projectList.innerHTML = '';
+
+      if (!filteredProjects.length) {
+        projectList.innerHTML = '<div class="project-item"><h3>No projects found</h3><p>Try a different search or filter.</p></div>';
+        thumbList.innerHTML = '';
+        projectTitle.textContent = 'No project found';
+        projectDesc.textContent = 'Adjust the filters to see matching projects.';
+        mainImage.removeAttribute('src');
+        projectTags.innerHTML = '';
+        projectHighlights.innerHTML = '';
+        return;
+      }
+
+      filteredProjects.forEach((project, index) => {
+        const card = document.createElement('div');
+        card.className = 'project-item' + (index === currentProjectIndex ? ' active' : '');
+        card.innerHTML = `
+          <h3>${project.name}</h3>
+          <div class="project-meta">
+            <span class="tag">${project.category}</span>
+            ${project.tech.slice(0,2).map(t => `<span class="tag">${t}</span>`).join('')}
+          </div>
+          <p>${project.description}</p>
+        `;
+        card.addEventListener('click', () => {
+          currentProjectIndex = index;
+          currentImageIndex = 0;
+          renderProjectList();
+          renderCurrentProject();
+        });
+        projectList.appendChild(card);
+      });
+    }
+
+    function renderCurrentProject() {
+      const project = filteredProjects[currentProjectIndex];
+      if (!project) return;
+
+      projectTitle.textContent = project.name;
+      projectDesc.textContent = project.description;
+
+      projectTags.innerHTML = '';
+      [project.category, ...project.tech].forEach(tag => {
+        const el = document.createElement('span');
+        el.className = 'tag';
+        el.textContent = tag;
+        projectTags.appendChild(el);
+      });
+
+      projectHighlights.innerHTML = '';
+      project.highlights.forEach(h => {
+        const li = document.createElement('li');
+        li.textContent = h;
+        projectHighlights.appendChild(li);
+      });
+
+      const img = project.images[currentImageIndex] || project.images[0];
+      if (img) {
+        mainImage.src = img.src;
+        mainImage.alt = img.label || project.name;
+      }
+
+      thumbList.innerHTML = '';
+      project.images.forEach((image, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'thumb' + (idx === currentImageIndex ? ' active' : '');
+        thumb.innerHTML = `
+          <img src="${image.src}" alt="${image.label || project.name}" />
+          <div class="thumb-label">${image.label || 'Screen ' + (idx + 1)}</div>
+        `;
+        thumb.addEventListener('click', () => {
+          currentImageIndex = idx;
+          renderCurrentProject();
+        });
+        thumbList.appendChild(thumb);
+      });
+    }
+
+    function prevImage() {
+      const project = filteredProjects[currentProjectIndex];
+      if (!project) return;
+      currentImageIndex = (currentImageIndex - 1 + project.images.length) % project.images.length;
+      renderCurrentProject();
+    }
+
+    function nextImage() {
+      const project = filteredProjects[currentProjectIndex];
+      if (!project) return;
+      currentImageIndex = (currentImageIndex + 1) % project.images.length;
+      renderCurrentProject();
+    }
+
+    // Zoom Modal Logic
+    let scale = 1;
+    let minScale = 1;
+    let maxScale = 6;
+    let translateX = 0;
+    let translateY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let lastTouchDistance = 0;
+    let pinchCenter = null;
+
+    function updateTransform() {
+      zoomImage.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    }
+
+    function clampTranslation() {
+      const rect = modalStage.getBoundingClientRect();
+      const imgRect = zoomImage.getBoundingClientRect();
+      const maxX = Math.max(0, (imgRect.width - rect.width) / 2 + 60);
+      const maxY = Math.max(0, (imgRect.height - rect.height) / 2 + 60);
+      translateX = Math.min(maxX, Math.max(-maxX, translateX));
+      translateY = Math.min(maxY, Math.max(-maxY, translateY));
+    }
+
+    function setScale(newScale, centerX = window.innerWidth / 2, centerY = window.innerHeight / 2) {
+      const oldScale = scale;
+      scale = Math.min(maxScale, Math.max(minScale, newScale));
+      if (scale === oldScale) return;
+
+      const rect = modalStage.getBoundingClientRect();
+      const offsetX = centerX - rect.left - rect.width / 2;
+      const offsetY = centerY - rect.top - rect.height / 2;
+      const scaleRatio = scale / oldScale;
+
+      translateX = (translateX - offsetX) * scaleRatio + offsetX;
+      translateY = (translateY - offsetY) * scaleRatio + offsetY;
+      clampTranslation();
+      updateTransform();
+    }
+
+    function resetZoom() {
+      scale = 1;
+      translateX = 0;
+      translateY = 0;
+      updateTransform();
+    }
+
+    function openZoom() {
+      const src = mainImage.getAttribute('src');
+      if (!src) return;
+      zoomImage.src = src;
+      zoomImage.alt = mainImage.alt || 'Project Image';
+      imageModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => resetZoom(), 50);
+    }
+
+    function closeZoom() {
+      imageModal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function syncZoomImage() {
+      if (!imageModal.classList.contains('active')) return;
+      const project = filteredProjects[currentProjectIndex];
+      const current = project?.images?.[currentImageIndex];
+      if (!current?.src) return;
+      zoomImage.src = current.src;
+      zoomImage.alt = current.label || mainImage.alt || 'Project Image';
+      resetZoom();
+    }
+
+    function modalPrevImage() {
+      prevImage();
+      syncZoomImage();
+    }
+
+    function modalNextImage() {
+      nextImage();
+      syncZoomImage();
+    }
+
+    // Mouse wheel zoom
+    modalStage.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY < 0 ? 0.2 : -0.2;
+      setScale(scale + delta, e.clientX, e.clientY);
+    }, { passive: false });
+
+    // Drag to pan
+    modalStage.addEventListener('mousedown', (e) => {
+      if (scale <= 1) return;
+      isDragging = true;
+      modalStage.classList.add('dragging');
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      clampTranslation();
+      updateTransform();
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+      modalStage.classList.remove('dragging');
+    });
+
+    // Double click zoom
+    modalStage.addEventListener('dblclick', (e) => {
+      if (scale > 1.1) {
+        resetZoom();
+      } else {
+        setScale(2.2, e.clientX, e.clientY);
+      }
+    });
+
+    // Touch helpers
+    function getTouchDistance(t1, t2) {
+      const dx = t2.clientX - t1.clientX;
+      const dy = t2.clientY - t1.clientY;
+      return Math.hypot(dx, dy);
+    }
+
+    function getTouchCenter(t1, t2) {
+      return {
+        x: (t1.clientX + t2.clientX) / 2,
+        y: (t1.clientY + t2.clientY) / 2
+      };
+    }
+
+    // Touch zoom + pan
+    modalStage.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        lastTouchDistance = getTouchDistance(e.touches[0], e.touches[1]);
+        pinchCenter = getTouchCenter(e.touches[0], e.touches[1]);
+      } else if (e.touches.length === 1 && scale > 1) {
+        isDragging = true;
+        startX = e.touches[0].clientX - translateX;
+        startY = e.touches[0].clientY - translateY;
+      }
+    }, { passive: false });
+
+    modalStage.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+
+      if (e.touches.length === 2) {
+        const newDistance = getTouchDistance(e.touches[0], e.touches[1]);
+        const center = getTouchCenter(e.touches[0], e.touches[1]);
+        if (lastTouchDistance) {
+          const zoomFactor = newDistance / lastTouchDistance;
+          setScale(scale * zoomFactor, center.x, center.y);
+        }
+        lastTouchDistance = newDistance;
+        pinchCenter = center;
+      } else if (e.touches.length === 1 && isDragging && scale > 1) {
+        translateX = e.touches[0].clientX - startX;
+        translateY = e.touches[0].clientY - startY;
+        clampTranslation();
+        updateTransform();
+      }
+    }, { passive: false });
+
+    modalStage.addEventListener('touchend', (e) => {
+      if (e.touches.length < 2) {
+        lastTouchDistance = 0;
+        pinchCenter = null;
+      }
+      if (e.touches.length === 0) {
+        isDragging = false;
+      }
+    });
+
+    // Main bindings
+    searchInput.addEventListener('input', applyFilters);
+    categoryFilter.addEventListener('change', applyFilters);
+    techFilter.addEventListener('change', applyFilters);
+    document.getElementById('prevImageBtn').addEventListener('click', prevImage);
+    document.getElementById('nextImageBtn').addEventListener('click', nextImage);
+    document.getElementById('modalPrevBtn').addEventListener('click', modalPrevImage);
+    document.getElementById('modalNextBtn').addEventListener('click', modalNextImage);
+    document.getElementById('zoomInBtn').addEventListener('click', () => setScale(scale + 0.4));
+    document.getElementById('zoomOutBtn').addEventListener('click', () => setScale(scale - 0.4));
+    document.getElementById('resetZoomBtn').addEventListener('click', resetZoom);
+    document.getElementById('closeModalBtn').addEventListener('click', closeZoom);
+    mainImage.addEventListener('click', openZoom);
+
+    imageModal.addEventListener('click', (e) => {
+      if (e.target === imageModal) closeZoom();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeZoom();
+      if (e.key === 'ArrowLeft') {
+        if (imageModal.classList.contains('active')) modalPrevImage();
+        else prevImage();
+      }
+      if (e.key === 'ArrowRight') {
+        if (imageModal.classList.contains('active')) modalNextImage();
+        else nextImage();
+      }
+    });
+
+    // Init
+    populateFilters();
+    renderProjectList();
+    renderCurrentProject();
+  </script>
+</body>
+</html>
