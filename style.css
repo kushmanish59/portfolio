@@ -771,14 +771,10 @@ touch-action: pan-y;
 }
 
 #certifications {
-  padding: 90px 0;
-  background: linear-gradient(180deg, #0b1120 0%, #111827 100%);
-  color: #fff;
   overflow: hidden;
 }
 
 #certifications .section-title {
-  color: #fff;
   text-align: center;
 }
 
